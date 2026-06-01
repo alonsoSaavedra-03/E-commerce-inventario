@@ -1,111 +1,183 @@
+/* Importación de Bootstrap y Bootstrap Icons desde node_modules */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Paleta de Colores de Stock Flow */
+  --bg-main: #1e1d1a;
+  --bg-card: #272622;
+  --bg-input: #1a1917;
+  
+  --bg-sidebar: #0c5e46;
+  --bg-sidebar-hover: #107559;
+  --bg-sidebar-active: #138567;
+  
+  --color-primary: #13a37f;
+  --color-primary-hover: #19b58d;
+  --color-accent-sand: #decbb7;
+  --color-number-gold: #e8c39e;
+  --color-border: #3d3b36;
+  --color-border-light: #167a5f;
+  
+  --text-main: #fbfaf8;
+  --text-muted: #a5a49b;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --font-sans: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+  /* Sobrescribir variables de Bootstrap para forzar el tema oscuro global */
+  --bs-body-bg: var(--bg-main) !important;
+  --bs-body-color: var(--text-main) !important;
 }
 
 body {
-  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--bg-main) !important;
+  color: var(--text-main) !important;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+/* Clases de Utilidad Personalizadas para la Marca */
+.bg-theme-main {
+  background-color: var(--bg-main) !important;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+.bg-theme-card {
+  background-color: var(--bg-card) !important;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+.bg-theme-input {
+  background-color: var(--bg-input) !important;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
+.bg-theme-sidebar {
+  background-color: var(--bg-sidebar) !important;
+}
+
+.bg-theme-sidebar-hover:hover {
+  background-color: var(--bg-sidebar-hover) !important;
+  color: var(--text-main) !important;
+}
+
+.bg-theme-sidebar-active {
+  background-color: var(--bg-sidebar-active) !important;
+  color: var(--text-main) !important;
+}
+
+.text-theme-gold {
+  color: var(--color-number-gold) !important;
+}
+
+.text-theme-sand {
+  color: var(--color-accent-sand) !important;
+}
+
+.text-theme-primary {
+  color: var(--color-primary) !important;
+}
+
+.border-theme {
+  border-color: var(--color-border) !important;
+}
+
+.border-theme-light {
+  border-color: var(--color-border-light) !important;
+}
+
+/* Estilización de Elementos nativos de Bootstrap para que encajen en el Tema Oscuro */
+.card {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+/* Forzar tablas transparentes con bordes y hover personalizados */
+.table {
+  --bs-table-bg: transparent !important;
+  --bs-table-color: var(--text-main) !important;
+  --bs-table-hover-color: var(--text-main) !important;
+  --bs-table-hover-bg: rgba(255, 255, 255, 0.03) !important;
+  --bs-table-border-color: var(--color-border) !important;
+  color: var(--text-main) !important;
+}
+
+.table th {
+  color: var(--color-accent-sand) !important;
+  border-bottom: 2px solid var(--color-border) !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.table td {
+  border-bottom: 1px solid rgba(61, 59, 54, 0.5) !important;
+  color: var(--text-main) !important;
+}
+
+.form-control {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--text-main) !important;
+}
+
+.form-control:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 0.25rem rgba(19, 163, 127, 0.25) !important;
+}
+
+.btn-primary-theme {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--text-main) !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary-theme:hover {
+  background-color: var(--color-primary-hover) !important;
+  border-color: var(--color-primary-hover) !important;
+  box-shadow: 0 4px 12px rgba(19, 163, 127, 0.25) !important;
+}
+
+/* Scrollbar Personalizado */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
   border-radius: 4px;
-  color: var(--text-h);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* Clases de Tamaño de Fuente y Utilidades de Diseño */
+.fs-11 {
+  font-size: 11px !important;
+}
+.fs-12 {
+  font-size: 12px !important;
+}
+.fs-13 {
+  font-size: 13px !important;
+}
+.fs-14 {
+  font-size: 14px !important;
+}
+.cursor-pointer {
+  cursor: pointer !important;
+}
+.max-w-160px {
+  max-width: 160px !important;
+}
+.w-120px {
+  width: 120px !important;
+}
+.h-64px {
+  width: 64px !important;
+  height: 64px !important;
 }
