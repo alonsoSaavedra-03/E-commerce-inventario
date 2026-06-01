@@ -1,13 +1,65 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import './Clientes.css';
 
 function Clientes({ clientes, setClientes }) {
+  // Estado para controlar la visibilidad del Modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Estados para el formulario de Nuevo Cliente
+  const [nombre, setNombre] = useState('');
+  const [email, setEmail] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [estado, setEstado] = useState('Activo');
+
   // Mensaje de éxito temporal
   const [successMessage, setSuccessMessage] = useState('');
 
   // Búsqueda y Filtros
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('Todos');
+
+  // Abrir modal y reiniciar formulario
+  const handleOpenModal = () => {
+    setNombre('');
+    setEmail('');
+    setTelefono('');
+    setEstado('Activo');
+    setIsModalOpen(true);
+  };
+
+  // Registrar un cliente y cerrar modal
+  const handleAddClientSubmit = (e) => {
+    e.preventDefault();
+    if (!nombre.trim() || !email.trim() || !telefono.trim()) {
+      alert('Por favor, completa todos los campos obligatorios.');
+      return;
+    }
+
+    // Verificar si el correo ya existe en el estado de clientes
+    const emailExists = clientes.some(c => c.email.toLowerCase() === email.trim().toLowerCase());
+    if (emailExists) {
+      alert('El correo electrónico ingresado ya está registrado.');
+      return;
+    }
+
+    const nextId = clientes.length > 0 ? Math.max(...clientes.map(c => c.id)) + 1 : 1;
+    const nuevoCliente = {
+      id: nextId,
+      nombre: nombre.trim(),
+      email: email.trim(),
+      telefono: telefono.trim(),
+      estado: estado,
+      fechaRegistro: 'Hoy, ' + new Date().toLocaleDateString([], { day: 'numeric', month: 'short', year: 'numeric' })
+    };
+
+    setClientes([nuevoCliente, ...clientes]);
+    setIsModalOpen(false);
+
+    // Mostrar éxito
+    setSuccessMessage(`¡Cliente "${nuevoCliente.nombre}" registrado correctamente!`);
+    setTimeout(() => setSuccessMessage(''), 4000);
+  };
 
   // Eliminar un cliente de la lista
   const handleDeleteClient = (clientId, clientName) => {
@@ -67,7 +119,7 @@ function Clientes({ clientes, setClientes }) {
             <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 mb-4">
               <h3 className="fs-5 fw-semibold text-white mb-0">Directorio de Clientes</h3>
               
-              {/* Barra de Filtros */}
+              {/* Barra de Filtros e Input de Búsqueda */}
               <div className="d-flex flex-wrap align-items-center gap-2 w-100 w-sm-auto">
                 <input 
                   type="text" 
@@ -87,6 +139,16 @@ function Clientes({ clientes, setClientes }) {
                   <option value="Activo">🟢 Activo</option>
                   <option value="Inactivo">🔴 Inactivo</option>
                 </select>
+
+                {/* Botón para abrir modal de registro */}
+                <button
+                  type="button"
+                  className="btn btn-primary-theme btn-sm d-flex align-items-center gap-2 fs-13 py-2 px-3 fw-medium"
+                  onClick={handleOpenModal}
+                >
+                  <i className="bi bi-person-plus-fill"></i>
+                  Agregar Cliente
+                </button>
               </div>
             </div>
             
@@ -149,6 +211,103 @@ function Clientes({ clientes, setClientes }) {
         </div>
 
       </div>
+
+      {/* Modal Flotante Centrado: Registrar Cliente */}
+      {isModalOpen && createPortal(
+        <div className="client-modal-overlay" onClick={() => setIsModalOpen(false)}>
+          <div className="client-modal-card" onClick={(e) => e.stopPropagation()}>
+            <form onSubmit={handleAddClientSubmit}>
+              {/* Cabecera */}
+              <div className="client-modal-header text-white">
+                <button 
+                  type="button" 
+                  className="btn-close btn-close-white position-absolute top-0 end-0 m-3" 
+                  aria-label="Close"
+                  onClick={() => setIsModalOpen(false)}
+                />
+                <div className="d-flex align-items-center gap-2">
+                  <i className="bi bi-person-plus-fill text-theme-sand fs-4"></i>
+                  <h4 className="m-0 fw-bold fs-5">Registrar Nuevo Cliente</h4>
+                </div>
+              </div>
+
+              {/* Cuerpo del Modal */}
+              <div className="client-modal-body text-white d-flex flex-column gap-3">
+                {/* Nombre */}
+                <div>
+                  <label className="text-secondary fw-semibold mb-1 fs-12">Nombre Completo *</label>
+                  <input 
+                    type="text" 
+                    className="form-control bg-theme-input border-theme text-white" 
+                    placeholder="Ej. Rosa Torres" 
+                    value={nombre}
+                    onChange={(e) => setNombre(e.target.value)}
+                    required
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="text-secondary fw-semibold mb-1 fs-12">Correo Electrónico *</label>
+                  <input 
+                    type="email" 
+                    className="form-control bg-theme-input border-theme text-white" 
+                    placeholder="Ej. rosa@email.com" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+
+                {/* Teléfono */}
+                <div>
+                  <label className="text-secondary fw-semibold mb-1 fs-12">Teléfono *</label>
+                  <input 
+                    type="tel" 
+                    className="form-control bg-theme-input border-theme text-white" 
+                    placeholder="Ej. 966332211" 
+                    value={telefono}
+                    onChange={(e) => setTelefono(e.target.value)}
+                    required
+                  />
+                </div>
+
+                {/* Estado */}
+                <div>
+                  <label className="text-secondary fw-semibold mb-1 fs-12">Estado Inicial</label>
+                  <select 
+                    className="form-select bg-theme-input border-theme text-white" 
+                    value={estado}
+                    onChange={(e) => setEstado(e.target.value)}
+                  >
+                    <option value="Activo" className="bg-dark text-white">🟢 Activo</option>
+                    <option value="Inactivo" className="bg-dark text-white">🔴 Inactivo</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Pie de Página */}
+              <div className="client-modal-footer d-flex justify-content-end gap-2">
+                <button 
+                  type="button" 
+                  className="btn btn-outline-secondary fs-13 py-2 px-3 text-white border-secondary border-opacity-25"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Cancelar
+                </button>
+                <button 
+                  type="submit" 
+                  className="btn btn-primary-theme fs-13 py-2 px-3 d-flex align-items-center gap-2"
+                >
+                  <i className="bi bi-check-circle"></i>
+                  Registrar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>,
+        document.body
+      )}
 
     </div>
   );
