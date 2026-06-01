@@ -1,0 +1,59 @@
+/* ==========================================
+   ESTILOS DE SECCIÓN: CLIENTES
+   ========================================== */
+
+/* Contenedor del Modal de Clientes (Overlay) */
+.client-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  padding: 16px;
+}
+
+/* Tarjeta de Modal Clientes */
+.client-modal-card {
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6) !important;
+  overflow: hidden;
+  animation: clientScaleUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes clientScaleUp {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.client-modal-header {
+  background: linear-gradient(135deg, var(--bg-sidebar) 0%, #084332 100%) !important;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-border-light) !important;
+  position: relative;
+}
+
+.client-modal-body {
+  padding: 24px;
+}
+
+.client-modal-footer {
+  padding: 16px 24px;
+  background-color: var(--bg-input) !important;
+  border-top: 1px solid var(--color-border) !important;
+}

@@ -1,0 +1,304 @@
+/* ==========================================
+   ESTILOS GENERALES DEL SHELL DEL DASHBOARD
+   ========================================== */
+
+/* Contenedor principal del Dashboard para evitar scroll global */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* Sidebar Estilizado */
+.dashboard-sidebar {
+  width: 280px;
+  z-index: 1050;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 100vh;
+  background: linear-gradient(180deg, var(--bg-sidebar) 0%, #084332 100%) !important;
+  flex-shrink: 0;
+  overflow-y: auto;
+  position: relative !important;
+}
+
+/* Círculos decorativos en el sidebar - Estilo Login */
+.sidebar-circle-1 {
+  width: 220px;
+  height: 220px;
+  top: -80px;
+  right: -80px;
+  background-color: var(--color-primary-hover);
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.sidebar-circle-2 {
+  width: 170px;
+  height: 170px;
+  bottom: -50px;
+  left: -60px;
+  background-color: var(--color-primary-hover);
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+/* Logo de la empresa */
+.sidebar-logo-container {
+  z-index: 10;
+}
+
+.sidebar-logo-box {
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Botones de navegación en el Sidebar */
+.nav-item-btn {
+  border-radius: 10px !important;
+  font-weight: 500;
+  color: rgba(251, 250, 248, 0.7) !important;
+  transition: all 0.25s ease !important;
+  border: 1px solid transparent !important;
+}
+
+.nav-item-btn:hover {
+  background-color: var(--bg-sidebar-hover) !important;
+  color: var(--text-main) !important;
+  transform: translateX(4px);
+}
+
+.nav-item-btn.active {
+  background: var(--bg-sidebar-active) !important;
+  color: var(--text-main) !important;
+  font-weight: 600;
+  border-left: 4px solid var(--color-number-gold) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Info de administrador al pie */
+.sidebar-footer-user {
+  z-index: 10;
+}
+
+.user-avatar-circle {
+  width: 42px;
+  height: 42px;
+  background-color: var(--bg-sidebar-active);
+  font-size: 14px;
+}
+
+/* Contenedores del lado derecho (fijos y desplazables) */
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.dashboard-navbar {
+  flex-shrink: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.main-content-scrollable {
+  flex-grow: 1;
+  overflow-y: auto;
+  background-color: var(--bg-main);
+}
+
+/* Animación de entrada suave para páginas */
+.fade-in-up {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================
+   ELEMENTOS DE LA PÁGINA DE INICIO (RESUMEN)
+   ========================================== */
+
+/* Banner de Bienvenida Premium - Renovado para evitar spam de verde */
+.welcome-banner-premium {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--color-border) !important;
+  border-left: 5px solid var(--color-primary) !important;
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-banner-premium::before {
+  content: '';
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(19, 163, 127, 0.12) 0%, rgba(19, 163, 127, 0) 70%);
+  top: -125px;
+  right: -50px;
+  pointer-events: none;
+}
+
+.welcome-banner-title {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* Tarjetas de Estadísticas Premium - Cambiado de fondo verde a fondo carbón oscuro */
+.stat-card-premium {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.stat-card-premium:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.4) !important;
+  border-color: var(--color-primary) !important;
+}
+
+.stat-card-label {
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.stat-card-value {
+  font-size: 38px;
+  font-weight: 800;
+}
+
+.stat-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  background-color: rgba(19, 163, 127, 0.08) !important;
+  border: 1px solid rgba(19, 163, 127, 0.15) !important;
+  color: var(--color-primary) !important;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+/* Efecto hover interactivo sobre el icono de estadísticas */
+.stat-card-premium:hover .stat-icon-wrapper {
+  background-color: var(--color-primary) !important;
+  color: var(--text-main) !important;
+  border-color: var(--color-primary) !important;
+}
+
+/* Tabla de Movimientos Recientes */
+.card-section-container {
+  border-radius: 16px !important;
+}
+
+.table-row-hover {
+  transition: background-color 0.2s ease;
+}
+
+.table-row-hover:hover td {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* Badges Modernos Tipo Cápsula */
+.badge-pill-modern {
+  border-radius: 50px !important;
+  padding: 5px 12px !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.2px;
+}
+
+/* Botones de Acciones Rápidas */
+.quick-action-btn-premium {
+  border-radius: 12px !important;
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--color-border) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.quick-action-btn-premium:hover {
+  border-color: var(--color-primary) !important;
+  background-color: rgba(19, 163, 127, 0.06) !important;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm);
+}
+
+.quick-action-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: rgba(19, 163, 127, 0.1);
+  color: var(--color-primary);
+  transition: all 0.25s ease;
+}
+
+.quick-action-btn-premium:hover .quick-action-icon-box {
+  background-color: var(--color-primary) !important;
+  color: var(--text-main) !important;
+}
+
+/* Alertas de Stock Bajo */
+.stock-alert-item-premium {
+  background-color: rgba(255, 107, 107, 0.04);
+  border: 1px dashed rgba(255, 107, 107, 0.25) !important;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.stock-alert-item-premium:hover {
+  background-color: rgba(255, 107, 107, 0.08);
+  border-color: rgba(255, 107, 107, 0.4) !important;
+}
+
+/* Elementos del Navbar */
+.navbar-search-box {
+  width: 280px;
+}
+
+.navbar-notification-btn {
+  transition: all 0.2s ease;
+}
+
+.navbar-notification-btn:hover {
+  background-color: var(--bg-input) !important;
+}
+
+.navbar-logout-btn-premium {
+  border-radius: 10px !important;
+  transition: all 0.2s ease !important;
+}
+
+.navbar-logout-btn-premium:hover {
+  transform: translateY(-1px);
+}
+
+/* Soporte para Mobile Sidebar */
+.sidebar-mobile-open {
+  display: flex !important;
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  height: 100vh !important;
+  z-index: 1050 !important;
+}
