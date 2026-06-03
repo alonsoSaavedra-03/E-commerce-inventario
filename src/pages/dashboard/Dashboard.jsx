@@ -4,6 +4,7 @@ import Pedidos from './sections/pedidos/Pedidos';
 import Clientes from './sections/clientes/Clientes';
 import Configuracion from './sections/configuracion/Configuracion';
 
+
 function Dashboard() {
   const [activeTab, setActiveTab] = useState('inicio');
   const [searchQuery, setSearchQuery] = useState('');
