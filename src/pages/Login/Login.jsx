@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { IconBox, IconUsers, IconShoppingCart, IconChartBar, IconArrowRight, IconMail, IconLock } from "@tabler/icons-react";
 import { useNavigate } from 'react-router-dom';
-
+import { users } from '../../data/users';
+import Swal from 'sweetalert2';
 import "./Login.css";
 
 const stats = [
@@ -26,7 +27,37 @@ export default function Login() {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/dashboard');
+  
+    const found = users.find(
+      u => u.email === email && u.password === password
+    );
+  
+    if (found) {
+      Swal.fire({
+        icon: 'success',
+        title: `¡Bienvenido!`,
+        text: `Ingresando como ${found.rol}...`,
+        timer: 1500,
+        showConfirmButton: false,
+        background: '#272622',
+        color: '#fbfaf8',
+        iconColor: '#13a37f',
+      }).then(() => {
+        localStorage.setItem('user', JSON.stringify(found));
+        navigate('/dashboard');
+      });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Credenciales incorrectas',
+        text: 'El correo o contraseña no son válidos.',
+        confirmButtonText: 'Intentar de nuevo',
+        background: '#272622',
+        color: '#fbfaf8',
+        iconColor: '#e74c3c',
+        confirmButtonColor: '#13a37f',
+      });
+    }
   };
 
   return (
