@@ -3,6 +3,7 @@ import './Dashboard.css';
 import Pedidos from './sections/pedidos/Pedidos';
 import Clientes from './sections/clientes/Clientes';
 import Configuracion from './sections/configuracion/Configuracion';
+import Productos from './sections/productos/Productos';
 
 
 function Dashboard() {
@@ -12,12 +13,12 @@ function Dashboard() {
   
   // Estados de datos compartidos
   const [productos, setProductos] = useState([
-    { id: 1, name: 'Teclado Mecánico RGB', price: 45.00, sku: 'PROD-0041', stock: 12 },
-    { id: 2, name: 'Mouse Ergonómico Inalámbrico', price: 25.00, sku: 'PROD-0108', stock: 18 },
-    { id: 3, name: 'Monitor Gamer 27\'\' FHD', price: 180.00, sku: 'PROD-0254', stock: 4 },
-    { id: 4, name: 'Auriculares Bluetooth Pro', price: 60.00, sku: 'PROD-0887', stock: 35 },
-    { id: 5, name: 'Cable HDMI 4K 2m', price: 8.00, sku: 'PROD-0021', stock: 3 }
-  ]);
+  { id: 1, nproducto: 'P001', nombre: 'Teclado Mecánico RGB', precio: 45, categoria: 'Electrónicos', estado: 'Disponible' },
+  { id: 2, nproducto: 'P002', nombre: 'Mouse Ergonómico Inalámbrico', precio: 25, categoria: 'Electrónicos', estado: 'Disponible' },
+  { id: 3, nproducto: 'P003', nombre: 'Monitor Gamer 27" FHD', precio: 180, categoria: 'Electrónicos', estado: 'Agotado' },
+  { id: 4, nproducto: 'P004', nombre: 'Auriculares Bluetooth Pro', precio: 60, categoria: 'Accesorios', estado: 'Disponible' },
+  { id: 5, nproducto: 'P005', nombre: 'Cable HDMI 4K 2m', precio: 8, categoria: 'Accesorios', estado: 'Disponible' }
+]);
 
   const [movimientos, setMovimientos] = useState([
     { id: 1, sku: 'PROD-0041', producto: 'Teclado Mecánico RGB', tipo: 'Entrada', cantidad: '+50 uds', fecha: 'Hoy, 14:32', responsable: 'Carlos M.', badgeClass: 'bg-success text-white' },
@@ -102,6 +103,14 @@ function Dashboard() {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'productos':
+        return(
+          <Productos 
+            productos={productos} 
+            setProductos={setProductos}
+            
+          />
+          );
       case 'pedidos':
         return (
           <Pedidos 
@@ -333,6 +342,9 @@ function Dashboard() {
 
   const getHeaderTitle = () => {
     switch (activeTab) {
+
+      case 'productos':
+        return { main: 'Gestión de Productos', sub: 'Listado de productos ' };
       case 'pedidos':
         return { main: 'Gestión de Pedidos', sub: 'Listado de ventas y estados de entrega' };
       case 'clientes':
@@ -389,6 +401,13 @@ function Dashboard() {
           >
             <i className="bi bi-grid-fill fs-5"></i>
             <span>Inicio</span>
+          </button>
+          <button 
+            className={`btn border-0 text-start d-flex align-items-center gap-3 px-3 py-2 text-white w-100 nav-item-btn ${activeTab === 'pedidos' ? 'active' : ''}`}
+            onClick={() => { setActiveTab('productos'); setIsSidebarOpen(false); }}
+          >
+            <i className="bi bi-box-seam fs-5"></i>
+            <span>Productos</span>
           </button>
 
           <button 

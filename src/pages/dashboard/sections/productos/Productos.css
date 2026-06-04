@@ -1,67 +1,170 @@
-/* VARIABLES EN ESPAÑOL */
+/* VARIABLES */
 :root {
+  --color-principal: #0F6E56;
+  --color-secundario: #1D9E97;
+  --color-fondo: #111;
+  --color-card: #1a1a1a;
+  --color-texto: #ffffff;
+  --color-borde: #333;
+  --color-exito: green;
+  --color-error: red;
   --fondo-modal: rgba(0,0,0,0.8);
-  --color-borde: #2a2a2a;
-  --fondo-card: var(--bg-card);
-  --fondo-header: linear-gradient(135deg, var(--bg-sidebar), #084332);
-}
-
-/* MODAL */
-.producto-modal-overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: var(--fondo-modal);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.producto-modal-card {
-  background: var(--fondo-card);
-  border-radius: 12px;
-  width: 400px;
-  overflow: hidden;
 }
 
 /* HEADER */
-.producto-modal-header {
-  background: var(--fondo-header);
-  padding: 16px;
-  color: white;
-}
-
-/* BODY */
-.producto-modal-body {
-  padding: 16px;
+.productos-header {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-texto);
+  margin-bottom: 15px;
 }
 
-.producto-modal-body input,
-.producto-modal-body select {
-  padding: 8px;
+/* BOTÓN AGREGAR */
+.btn-agregar {
+  background: var(--color-principal);
+  border: none;
+  padding: 8px 14px;
+  color: var(--color-texto);
   border-radius: 6px;
-  border: 1px solid var(--color-borde);
+  cursor: pointer;
 }
 
-/* FOOTER */
-.producto-modal-footer {
-  padding: 16px;
-  display: flex;
-  justify-content: flex-end;
+.btn-agregar:hover {
+  background: var(--color-secundario);
+}
+
+/* BUSCADOR */
+.input-busqueda {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: none;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+/* ALERTA */
+.alerta {
+  background: var(--color-exito);
+  color: var(--color-texto);
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+/* TABLA */
+.tabla-container {
+  overflow-x: auto;
+}
+
+.tabla-productos {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--color-texto);
+}
+
+.tabla-productos th,
+.tabla-productos td {
+  padding: 10px;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+/* BADGES */
+.badge {
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.badge.ok {
+  background: var(--color-exito);
+}
+
+.badge.bad {
+  background: var(--color-error);
 }
 
 /* BOTONES ICONOS */
 .btn-icon {
   border: none;
   background: transparent;
-  font-size: 18px;
-  margin-right: 8px;
   cursor: pointer;
+  font-size: 18px;
+  margin-right: 5px;
 }
 
 .btn-icon:hover {
   transform: scale(1.2);
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--fondo-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-card {
+  background: var(--color-card);
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  color: var(--color-texto);
+}
+
+/* INPUTS DEL MODAL */
+.modal-card input,
+.modal-card select {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+/* BOTÓN MODAL */
+.modal-card button {
+  width: 100%;
+  padding: 10px;
+  background: var(--color-principal);
+  border: none;
+  color: var(--color-texto);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modal-card button:hover {
+  background: var(--color-secundario);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+  .tabla-productos th,
+  .tabla-productos td {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .btn-agregar {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .modal-card {
+    width: 95%;
+  }
+
 }
