@@ -8,7 +8,8 @@ function Productos({ productos, setProductos }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [productoEditando, setProductoEditando] = useState(null);
 
-  // Formulario
+  // FORMULARIO
+  const [nproducto, setNproducto] = useState('');
   const [nombre, setNombre] = useState('');
   const [precio, setPrecio] = useState('');
   const [categoria, setCategoria] = useState('');
@@ -17,7 +18,9 @@ function Productos({ productos, setProductos }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
+  // ABRIR MODAL (AGREGAR)
   const handleOpenModal = () => {
+    setNproducto('');
     setNombre('');
     setPrecio('');
     setCategoria('');
@@ -26,28 +29,27 @@ function Productos({ productos, setProductos }) {
     setIsModalOpen(true);
   };
 
-  // AGREGAR PRODUCTO
+  // GUARDAR (AGREGAR / EDITAR)
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!nombre || !precio || !categoria) {
+    if (!nproducto || !nombre || !precio || !categoria) {
       alert('Completa todos los campos');
       return;
     }
 
     if (isEditMode) {
-      // EDITAR
       const updated = productos.map(p =>
         p.id === productoEditando.id
-          ? { ...p, nombre, precio, categoria, estado }
+          ? { ...p, nproducto, nombre, precio, categoria, estado }
           : p
       );
       setProductos(updated);
       setSuccessMessage('Producto actualizado');
     } else {
-      // NUEVO
       const newProducto = {
         id: Date.now(),
+        nproducto,
         nombre,
         precio,
         categoria,
@@ -64,6 +66,7 @@ function Productos({ productos, setProductos }) {
   // EDITAR
   const handleEdit = (producto) => {
     setProductoEditando(producto);
+    setNproducto(producto.nproducto);
     setNombre(producto.nombre);
     setPrecio(producto.precio);
     setCategoria(producto.categoria);
@@ -91,8 +94,8 @@ function Productos({ productos, setProductos }) {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className="text-white">Productos</h2>
 
-        <button className="btn btn-primary-theme" onClick={handleOpenModal}>
-          ➕ Agregar Producto
+        <button className="btn-agregar" onClick={handleOpenModal}>
+          + Agregar Producto
         </button>
       </div>
 
@@ -116,50 +119,53 @@ function Productos({ productos, setProductos }) {
       <div className="card bg-theme-card p-4">
         <h5 className="text-white mb-3">Directorio de Productos</h5>
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th>N°</th>
-              <th>Producto</th>
-              <th>Precio</th>
-              <th>Categoría</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {filteredProductos.map((p, index) => (
-              <tr key={p.id}>
-                <td>{index + 1}</td>
-                <td>{p.nombre}</td>
-                <td>S/ {p.precio}</td>
-                <td>{p.categoria}</td>
-
-                <td>
-                  <span className={p.estado === 'Disponible' ? 'badge bg-success' : 'badge bg-danger'}>
-                    {p.estado}
-                  </span>
-                </td>
-
-                <td>
-                  <button onClick={() => handleEdit(p)} className="btn-icon">
-                    ✏️
-                  </button>
-                  <button onClick={() => handleDelete(p.id, p.nombre)} className="btn-icon">
-                    🗑️
-                  </button>
-                </td>
+        <div className="table-responsive">
+          <table className="table align-middle">
+            <thead>
+              <tr>
+                <th>N° Producto</th>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Estado</th>
+                <th>Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {filteredProductos.map((p) => (
+                <tr key={p.id}>
+                  <td>{p.nproducto}</td>
+                  <td>{p.nombre}</td>
+                  <td>S/ {p.precio}</td>
+                  <td>{p.categoria}</td>
+
+                  <td>
+                    <span className={p.estado === 'Disponible' ? 'badge bg-success' : 'badge bg-danger'}>
+                      {p.estado}
+                    </span>
+                  </td>
+
+                  <td>
+                    <button onClick={() => handleEdit(p)} className="btn-icon">
+                      ✏️
+                    </button>
+                    <button onClick={() => handleDelete(p.id, p.nombre)} className="btn-icon">
+                      🗑️
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+
+          </table>
+        </div>
       </div>
 
       {/* MODAL */}
       {isModalOpen && createPortal(
-        <div className="producto-modal-overlay" onClick={() => setIsModalOpen(false)}>
-          <div className="producto-modal-card" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+          <div className="modal-card" onClick={(e) => e.stopPropagation()}>
 
             <form onSubmit={handleSubmit}>
               <div className="producto-modal-header">
@@ -167,6 +173,14 @@ function Productos({ productos, setProductos }) {
               </div>
 
               <div className="producto-modal-body">
+
+                <input
+                  type="text"
+                  placeholder="N° Producto (Ej: P001)"
+                  value={nproducto}
+                  onChange={(e) => setNproducto(e.target.value)}
+                />
+
                 <input
                   type="text"
                   placeholder="Nombre"
@@ -192,6 +206,7 @@ function Productos({ productos, setProductos }) {
                   <option>Disponible</option>
                   <option>Agotado</option>
                 </select>
+
               </div>
 
               <div className="producto-modal-footer">
@@ -206,5 +221,4 @@ function Productos({ productos, setProductos }) {
     </div>
   );
 }
-
 export default Productos;
